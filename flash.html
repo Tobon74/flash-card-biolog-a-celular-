@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flashcards de Bioquímica y Biología Molecular Celular</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --card: #f8fafc;
+  --tx: #0f172a;
+  --mu: #475569;
+  --ac: #0284c7;
+  --ac-hover: #0369a1;
+  --bd: #e2e8f0;
+  --ok: #16a34a;
+  --no: #dc2626;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+button, select {
+  font: inherit;
+  border: 1px solid var(--bd);
+  background: #ffffff;
+  color: var(--tx);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+button:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+button.on {
+  background: var(--ac);
+  color: #fff;
+  border-color: var(--ac);
+  box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2);
+}
+button.on:hover {
+  background: var(--ac-hover);
+}
+.bar {
+  height: 8px;
+  background: var(--bd);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--ac);
+  width: 0;
+  transition: width .3s ease;
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--mu);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  min-height: 280px;
+  padding: 32px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.tag {
+  font-size: 0.75rem;
+  color: var(--ac);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.txt {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.a .txt {
+  font-size: 1.05rem;
+  color: #334155;
+}
+.hint {
+  color: var(--mu);
+  font-size: 0.8rem;
+  margin-top: 20px;
+  font-style: italic;
+}
+.act {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.act button {
+  padding: 12px;
+  font-weight: 600;
+}
+.act .no {
+  border-color: #fca5a5;
+  color: var(--no);
+  background: #fef2f2;
+}
+.act .no:hover {
+  background: #fee2e2;
+}
+.act .ok {
+  border-color: #86efac;
+  color: var(--ok);
+  background: #f0fdf4;
+}
+.act .ok:hover {
+  background: #dcfce7;
+}
+.stat {
+  color: var(--mu);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 16px;
+  font-weight: 500;
+}
+.footer-author {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--bd);
+  font-size: 0.8rem;
+  color: var(--mu);
+}
+</style>
+</head>
+<body>
+<main>
+<h1>🧬 Flashcards de Bioquímica y Biología Molecular</h1>
+<div class="row" id="cats"></div>
+<div class="row" id="lvls"></div>
+<div class="row">
+  <button id="sh">🔀 Mezclar</button>
+  <button id="hide">Ocultar dominadas</button>
+  <button id="rs">Reiniciar</button>
+</div>
+<div class="meta"><span id="pos"></span><span id="pct"></span></div>
+<div class="bar"><i id="pb"></i></div>
+<div class="card" id="card">
+  <div class="tag" id="tag"></div>
+  <div class="txt" id="txt"></div>
+  <div class="hint" id="hint">Toca para ver la respuesta clínica</div>
+</div>
+<div class="act">
+  <button id="prev">← Anterior</button>
+  <button class="no" id="no">Repasar</button>
+  <button class="ok" id="ok">Dominada ✓</button>
+</div>
+<div class="stat" id="stat"></div>
+<div class="footer-author">Autor del proyecto: Villa Tobón Carlos Alberto</div>
+</main>
+<script>
+const C=["Grupos funcionales y polaridad","Carbohidratos","Aminoácidos y proteínas","Lípidos, enzimas y bioenergética"];
+const L=["","Básico","Intermedio","Avanzado"];
+const D=[
+[0,1,"¿Qué define a un grupo funcional como polar en biología?","Enlaces covalentes polares con distribución asimétrica de electrones: genera momento dipolar y alta afinidad por el agua (hidrofílico)."],
+[0,1,"Menciona tres grupos funcionales polares e hidrofílicos comunes.","Hidroxilo (–OH), amino (–NH₂) y carbonilo (>C=O)."],
+[0,1,"¿Qué caracteriza a los hidrocarburos y grupos alifáticos (como –CH₃)?","Son apolares (hidrofóbicos), insolubles en agua y establecen interacciones débiles de van der Waals."],
+[0,1,"¿Cuál es el enlace interatómico más fuerte en las biomoléculas?","El enlace covalente: mantiene unida la cadena principal de los polímeros."],
+[0,2,"¿Por qué son importantes los puentes de hidrógeno en las macromoléculas?","Individualmente débiles, pero su gran número da estabilidad (doble hélice del ADN, estructuras secundarias de proteínas)."],
+[0,2,"¿Cómo influye el efecto hidrofóbico en las proteínas globulares?","Agrupa las cadenas laterales apolares en el interior, minimizando su contacto desfavorable con el agua."],
+[0,2,"¿Qué son las fuerzas de van der Waals e importancia clínica?","Atracciones débiles y temporales entre dipolos inducidos; significativas de forma acumulativa para el acoplamiento molecular."],
+[0,2,"¿Cómo se define un ácido débil en medio biológico?","Dona parcialmente protones (H⁺), con equilibrio dinámico entre su forma disociada y no disociada."],
+[0,2,"¿Qué función cumplen los sistemas amortiguadores (tampones) corporales?","Mantienen el pH intra y extracelular en rangos estrictos al neutralizar la adición de ácidos o bases."],
+[0,3,"¿Qué caracteriza al enlace peptídico en polaridad y rigidez?","Carácter parcial de doble enlace por resonancia: rigidez planar sin rotación libre; polar (C=O aceptor y N–H donante)."],
+[1,1,"¿Cuál es la fórmula empírica general de los monosacáridos simples?","(CH₂O)ₙ, donde n ≥ 3."],
+[1,1,"¿Qué diferencia a una aldosa de una cetosa?","La aldosa tiene un grupo aldehído en el carbono terminal (C1); la cetosa, una cetona en un carbono interno (generalmente C2)."],
+[1,2,"¿Cómo se forma un enlace glicosídico?","Por condensación (deshidratación) entre el hidroxilo del carbono anomérico de un monosacárido y un hidroxilo de otra molécula."],
+[1,2,"¿Qué diferencia hay entre almidón y glucógeno?","Ambos almacenan glucosa con enlaces α(1→4) y ramificaciones α(1→6), pero el glucógeno (animal) está mucho más ramificado."],
+[1,2,"¿Por qué los humanos no digerimos la celulosa si es un polímero de glucosa?","Sus glucosas se unen por enlaces β(1→4) y carecemos de la enzima celulasa para romper dichos enlaces."],
+[1,2,"¿Qué función tiene el ácido hialurónico?","Lubricante en el líquido sinovial y amortiguador/relleno de la matriz extracelular en morfogénesis y reparación."],
+[1,3,"¿Qué es un carbono anomérico?","El antiguo carbono carbonílico que, tras la ciclación, se vuelve un nuevo estereocentro y origina los anómeros α y β."],
+[1,3,"¿Qué son los glucosaminoglicanos (GAGs) y su propiedad clave?","Heteropolisacáridos lineales con alta carga negativa: atraen agua y forman geles hidratados que resisten la compresión."],
+[1,3,"¿Cómo difieren las glicoproteínas O-glicosídicas de las N-glicosídicas?","O: se unen al hidroxilo de serina o treonina. N: se unen al grupo amida de la asparagina."],
+[1,3,"¿Cuál es el significado clínico de los antígenos ABO eritrocitarios?","Oligosacáridos complejos unidos a lípidos y proteínas de membrana; sus extremos definen la identidad antigénica y la compatibilidad."],
+[2,1,"¿Qué estructura comparten todos los L-α-aminoácidos proteicos humanos?","Un carbono α unido a un grupo amino, un grupo carboxilo, un hidrógeno y una cadena lateral única (grupo R)."],
+[2,1,"¿Cómo se clasifican los aminoácidos según la polaridad del grupo R?","No polares (hidrofóbicos), polares sin carga, polares con carga positiva (básicos) y polares con carga negativa (ácidos)."],
+[2,1,"¿Qué aminoácido es aquiral porque su cadena lateral es un hidrógeno?","La glicina."],
+[2,1,"¿Qué define la estructura primaria de una proteína?","La secuencia lineal y ordenada de aminoácidos unidos por enlaces peptídicos."],
+[2,1,"¿Cómo se diferencian las proteínas fibrosas de las globulares?","Fibrosas: alargadas, de soporte mecánico y resistencia. Globulares: compactas, con función catalítica, de transporte o regulación."],
+[2,2,"¿Qué importancia estructural tiene la prolina?","Su cadena lateral forma un anillo rígido con el N α: rompe las hélices α y crea codos o giros pronunciados."],
+[2,2,"¿Cuáles son las estructuras secundarias principales y qué las estabiliza?","Hélice α y lámina plegada β, estabilizadas por puentes de hidrógeno regulares entre átomos del esqueleto peptídico."],
+[2,2,"¿Qué estabiliza la estructura terciaria de una proteína globular?","Enlaces no covalentes entre cadenas laterales (puentes de H, electrostáticos, van der Waals) y puentes disulfuro covalentes."],
+[2,2,"¿Qué es la estructura cuaternaria?","La asociación no covalente de dos o más cadenas polipeptídicas (subunidades) en un complejo funcional."],
+[2,2,"¿Qué ocurre en la desnaturalización proteica y qué niveles se alteran?","Se pierde la conformación nativa (terciaria, secundaria y cuaternaria) y la función; la estructura primaria permanece intacta."],
+[2,2,"¿Qué hacen las chaperonas moleculares?","Asisten el plegamiento correcto de proteínas nuevas y evitan la agregación de regiones hidrofóbicas expuestas."],
+[2,2,"¿Qué es un dominio proteico?","Unidad modular compacta y estable que se pliega de forma independiente y cumple una función o unión específica."],
+[2,3,"¿Qué papel tienen los puentes disulfuro y dónde se forman?","Enlaces covalentes entre cisteínas que estabilizan proteínas extracelulares o de membrana en medios oxidantes como el retículo endoplasmático."],
+[2,3,"¿Qué es el punto isoeléctrico (pI)?","El pH en que la carga neta de la molécula es cero (zwitterión)."],
+[2,3,"¿Cómo afecta el pH a la ionización de una proteína?","Un pH ácido favorece la protonación; uno alcalino, la desprotonación, alterando la carga neta y su conformación tridimensional."],
+[3,1,"¿Qué define fisicoquímicamente a los lípidos?","Insolubilidad en agua (hidrofobicidad) y solubilidad en disolventes orgánicos apolares por su alto contenido de enlaces C–H."],
+[3,1,"¿Qué diferencia hay entre un ácido graso saturado y uno insaturado?","Saturado: sin dobles enlaces, recto. Insaturado: uno o más dobles enlaces (cis) que generan dobleces y aumentan la fluidez de membrana."],
+[3,1,"¿Cuál es el precursor común de todos los esteroides humanos?","El colesterol."],
+[3,1,"¿Qué es una enzima y cómo actúa?","Un biocatalizador que acelera reacciones al reducir la energía de activación, sin modificar el equilibrio termodinámico."],
+[3,1,"¿Qué indica un ΔG negativo?","Que la reacción es espontánea (termodinámicamente favorable) y libera energía libre."],
+[3,2,"¿Cómo se disponen los glicerofosfolípidos en las membranas?","Son anfifílicos (cabeza polar y dos colas apolares) y se autoensamblan en bicapa lipídica en medio acuoso."],
+[3,2,"¿Qué función tiene el colesterol en las membranas eucariotas?","Regula la fluidez: previene la rigidez excesiva a bajas temperaturas y reduce la permeabilidad excesiva a altas temperaturas."],
+[3,2,"¿Qué productos netos deja la glicólisis por molécula de glucosa?","2 piruvato, 2 ATP netos y 2 NADH."],
+[3,2,"¿Cuándo ocurre la fermentación láctica en tejidos humanos?","En hipoxia o ejercicio intenso: regenera el NAD⁺ para mantener activa la producción anaeróbica de ATP."],
+[3,2,"¿Cuál es la función principal del NADH?","Transporta electrones y protones del catabolismo a la cadena respiratoria mitocondrial para sintetizar ATP."],
+[3,3,"¿En qué se diferencia el NADPH del NADH?","El NADPH es agente reductor anabólico (síntesis de lípidos y ácidos nucleicos); el NADH participa en rutas catabólicas generadoras de ATP."],
+[3,3,"¿Cómo impulsa la célula reacciones desfavorables?","Por acoplamiento energético con reacciones muy favorables, principalmente la hidrólisis del ATP."],
+[3,3,"¿Por qué la hidrólisis del enlace fosfoanhídrido del ATP libera tanta energía?","Disminuye la repulsión electrostática entre fosfatos vecinos y el fosfato inorgánico liberado se estabiliza por resonancia."],
+[3,3,"¿Qué caracteriza a una enzima alostérica?","Posee sitios alostéricos de regulación no covalente que modifican cooperativamente su actividad catalítica."],
+[3,3,"¿Qué ventaja tiene la compartimentación intracelular del metabolismo?","Separa procesos opuestos (anabolismo y catabolismo), optimiza la eficiencia enzimática y regula los flujos metabólicos de forma independiente."]
+];
+const $=id=>document.getElementById(id);
+let cat=-1,lv=0,hideDone=false,i=0,flip=false,order=D.map((_,k)=>k),done={};
+try{done=JSON.parse(localStorage.getItem("fcb_v2")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("fcb_v2",JSON.stringify(done))}catch(e){}};
+const base=()=>D.map((_,k)=>k).sort((a,b)=>D[a][0]-D[b][0]||D[a][1]-D[b][1]||a-b);
+order=base();
+function chips(el,items,get,set){el.innerHTML="";items.forEach(([v,t])=>{const b=document.createElement("button");b.textContent=t;if(get()===v)b.className="on";b.onclick=()=>{set(v);i=0;flip=false;chips(el,items,get,set);draw()};el.appendChild(b)})}
+function list(){return order.filter(k=>(cat<0||D[k][0]===cat)&&(!lv||D[k][1]===lv)&&!(hideDone&&done[k]))}
+function draw(){
+ const l=list(),n=l.length,tot=D.filter((d,k)=>(cat<0||d[0]===cat)&&(!lv||d[1]===lv)).length,dn=D.filter((d,k)=>(cat<0||d[0]===cat)&&(!lv||d[1]===lv)&&done[k]).length;
+ $("pb").style.width=(tot?dn/tot*100:0)+"%";$("pct").textContent=dn+"/"+tot+" dominadas";
+ $("stat").textContent=(cat<0?"Todas las categorías":C[cat])+" · "+(lv?L[lv]:"Todos los niveles");
+ if(!n){$("pos").textContent="0/0";$("tag").textContent="";$("txt").textContent="No hay tarjetas con este filtro. 🎉";$("hint").textContent="";$("card").className="card";return}
+ if(i>=n)i=0;if(i<0)i=n-1;const k=l[i],d=D[k];
+ $("pos").textContent=(i+1)+"/"+n;
+ $("tag").textContent=C[d[0]]+" · "+L[d[1]];
+ $("txt").textContent=flip?d[3]:d[2];
+ $("card").className="card"+(flip?" a":"");
+ $("hint").textContent=flip?"Respuesta clínica":"Toca para ver la respuesta clínica";
+}
+chips($("cats"),[[-1,"Todas"],[0,"1 Polaridad"],[1,"2 Carbohidratos"],[2,"3 Proteínas"],[3,"4 Lípidos/Energía"]],()=>cat,v=>cat=v);
+chips($("lvls"),[[0,"Todos"],[1,"Básico"],[2,"Intermedio"],[3,"Avanzado"]],()=>lv,v=>lv=v);
+$("card").onclick=()=>{flip=!flip;draw()};
+$("prev").onclick=()=>{i--;flip=false;draw()};
+const mark=v=>{const l=list();if(!l.length)return;if(v)done[l[i]]=1;else delete done[l[i]];save();flip=false;if(!(v&&hideDone))i++;draw()};
+$("ok").onclick=()=>mark(true);$("no").onclick=()=>mark(false);
+$("sh").onclick=()=>{const a=D.map((_,k)=>k);for(let j=a.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[a[j],a[r]]=[a[r],a[j]]}order=a;i=0;flip=false;draw()};
+$("hide").onclick=e=>{hideDone=!hideDone;e.target.className=hideDone?"on":"";i=0;draw()};
+$("rs").onclick=()=>{done={};save();order=base();i=0;flip=false;draw()};
+document.onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();flip=!flip;draw()}else if(e.key==="ArrowRight"){i++;flip=false;draw()}else if(e.key==="ArrowLeft"){i--;flip=false;draw()}};
+draw();
+</script>
+</body>
+</html>
